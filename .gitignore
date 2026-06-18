@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+
+# Azure Functions
+local.settings.json
+.python_packages/
+.funcignore
+
+# Segurança
+.env
+*.env
+*.key
+secrets/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
