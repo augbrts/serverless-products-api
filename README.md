@@ -171,38 +171,39 @@ az group delete --name "$RG" --yes --no-wait
 
 ### API Tests
 
-**Create product (POST):**
+**Create product (POST) — returns 201 with generated ID:**
 ![POST create product](evidencias/testes/01-post-criar-produto.png)
 
-**List and get by ID (GET):**
+**List all and get by ID (GET):**
 ![GET list and by ID](evidencias/testes/02-get-lista-e-por-id.png)
 
 **Full and partial update (PUT / PATCH):**
 ![PUT PATCH update](evidencias/testes/03-put-patch.png)
 
-**Delete and 404 validation (DELETE):**
+**Delete and 404 validation (DELETE then GET):**
 ![DELETE and 404](evidencias/testes/04-delete-e-404.png)
 
-**Function deployment log:**
-![Deployment log](evidencias/testes/05-deploy-functions-list.png)
+**Function deployment with synced triggers:**
+![Deployment functions list](evidencias/testes/05-deploy-functions-list.png)
 
 ### Database
 
-**Cosmos DB Data Explorer with records:**
+**Cosmos DB Data Explorer showing a persisted product:**
 ![Cosmos DB Data Explorer](evidencias/banco/01-cosmosdb-data-explorer.png)
 
 ### Monitoring
 
-**Application Insights — Logs (KQL):**
-![Application Insights Logs](evidencias/logs/01-application-insights-logs.png)
+**Application Insights — request logs (KQL query results):**
+![Application Insights Logs](evidencias/logs/02-application-insights-logs-results.png)
 
-**Application Insights — Performance metrics:**
+**Application Insights — performance metrics (duration, request count):**
 ![Performance metrics](evidencias/dashboard/01-performance-metricas.png)
 
 ### Alerts
 
-**Configured alert rules:**
+**Two alert rules configured in Azure Monitor (failures + latency):**
 ![Alert rules](evidencias/alertas/01-alertas-configurados.png)
+
 
 ## Academic project
 
