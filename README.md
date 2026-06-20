@@ -1,4 +1,4 @@
-# Serverless Products API — Azure
+# Serverless Products API - Azure
 
 Serverless REST API for product management, built with **Azure Functions** (V1 programming model) and **Azure Cosmos DB**.
 
