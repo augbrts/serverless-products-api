@@ -1,17 +1,17 @@
 # Serverless Products API — Azure
 
-API REST serverless para gerenciamento de produtos, construída com **Azure Functions** (modelo V1) e **Azure Cosmos DB**.
+Serverless REST API for product management, built with **Azure Functions** (V1 programming model) and **Azure Cosmos DB**.
 
 ## Stack
 
-| Componente | Serviço |
+| Component | Service |
 |---|---|
-| Compute | Azure Functions (Python 3.11, Consumption Plan, modelo V1) |
-| Banco NoSQL | Azure Cosmos DB (API NoSQL, modo Serverless) |
-| Observabilidade | Application Insights + Azure Monitor |
+| Compute | Azure Functions (Python 3.11, Consumption Plan, V1 model) |
+| NoSQL Database | Azure Cosmos DB (NoSQL API, Serverless mode) |
+| Observability | Application Insights + Azure Monitor |
 
-## Arquitetura
-Postman / Cliente HTTP
+## Architecture
+Postman / HTTP Client
 
 │
 
@@ -31,22 +31,22 @@ Azure Cosmos DB (NoSQL)
 
 │
 
-└── Application Insights (logs, falhas, performance)
+└── Application Insights (logs, failures, performance)
 
-└── Azure Monitor (alertas)
+└── Azure Monitor (alerts)
 
 ## Endpoints
 
-| Método | Rota | Descrição | Status |
+| Method | Route | Description | Status |
 |---|---|---|---|
-| POST | /produtos | Criar produto | 201 |
-| GET | /produtos | Listar todos | 200 |
-| GET | /produtos/{id} | Consultar por ID | 200 / 404 |
-| PUT | /produtos/{id} | Atualizar completamente | 200 / 404 |
-| PATCH | /produtos/{id} | Atualizar parcialmente | 200 / 404 |
-| DELETE | /produtos/{id} | Excluir | 200 / 404 |
+| POST | /produtos | Create product | 201 |
+| GET | /produtos | List all products | 200 |
+| GET | /produtos/{id} | Get product by ID | 200 / 404 |
+| PUT | /produtos/{id} | Full update | 200 / 404 |
+| PATCH | /produtos/{id} | Partial update | 200 / 404 |
+| DELETE | /produtos/{id} | Delete product | 200 / 404 |
 
-## Estrutura do projeto
+## Project structure
 serverless-products-api/
 
 ├── projeto3-azure/
@@ -55,7 +55,7 @@ serverless-products-api/
 
 │   ├── ProdutoItem/        # GET, PUT, PATCH, DELETE /produtos/{id}
 
-│   ├── shared_code/        # Cliente Cosmos DB e helpers
+│   ├── shared_code/        # Cosmos DB client and helpers
 
 │   ├── host.json
 
@@ -63,32 +63,32 @@ serverless-products-api/
 
 ├── infra/
 
-│   └── variaveis.sh        # Nomes dos recursos (sem segredos)
+│   └── variaveis.sh        # Resource names (no secrets)
 
 ├── postman/
 
 │   └── produtos-api-collection.json
 
-├── evidencias/             # Prints de testes, banco, logs, dashboard, alertas
+├── evidencias/             # Test, database, logs, dashboard and alert screenshots
 
 └── README.md
 
-## Pré-requisitos
+## Prerequisites
 
 - Azure CLI (`az version`)
 - Azure Functions Core Tools v4 (`func --version`)
 - Python 3.11
 
-## Como reproduzir
+## How to reproduce
 
-### 1. Clonar e configurar variáveis
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/SEU_USUARIO/serverless-products-api.git
 cd serverless-products-api
 ```
 
-### 2. Provisionar a infraestrutura
+### 2. Provision the infrastructure
 
 ```bash
 export LOCATION=brazilsouth
@@ -110,7 +110,7 @@ az monitor app-insights component create --app "$APPINSIGHTS" --location "$LOCAT
 az functionapp create --resource-group "$RG" --consumption-plan-location "$LOCATION" --runtime python --runtime-version 3.11 --functions-version 4 --name "$FUNC" --storage-account "$STORAGE" --os-type Linux
 ```
 
-### 3. Configurar variáveis da Function App
+### 3. Configure the Function App settings
 
 ```bash
 export COSMOS_CONN=$(az cosmosdb keys list --name "$COSMOS" --resource-group "$RG" --type connection-strings --query "connectionStrings[0].connectionString" -o tsv)
@@ -125,7 +125,7 @@ az functionapp config appsettings set --resource-group "$RG" --name "$FUNC" --se
   ENABLE_ORYX_BUILD=true
 ```
 
-### 4. Publicar o código
+### 4. Publish the code
 
 ```bash
 cd projeto3-azure
@@ -133,9 +133,9 @@ func azure functionapp publish "$FUNC" --python
 cd ..
 ```
 
-> **Importante:** use `func azure functionapp publish` (Azure Functions Core Tools), não `az functionapp deployment source config-zip`. Este último não sincroniza os triggers automaticamente em alguns cenários, fazendo com que as funções não apareçam mesmo após um deploy "bem-sucedido".
+> **Important:** use `func azure functionapp publish` (Azure Functions Core Tools), not `az functionapp deployment source config-zip`. The latter doesn't reliably sync triggers in some scenarios, causing the functions to never show up even after a "successful" deploy.
 
-### 5. Testar
+### 5. Test it
 
 ```bash
 export HOST_KEY=$(az functionapp keys list --resource-group "$RG" --name "$FUNC" --query "functionKeys.default" -o tsv)
@@ -144,29 +144,29 @@ export AZURE_BASE_URL="https://$FUNC.azurewebsites.net/api"
 curl -s -X POST "$AZURE_BASE_URL/produtos" \
   -H "Content-Type: application/json" \
   -H "x-functions-key: $HOST_KEY" \
-  -d '{"nome":"Mouse","descricao":"Mouse USB","categoria":"Perifericos","preco":89.90,"estoque":10,"ativo":true}'
+  -d '{"nome":"Mouse","descricao":"Wireless USB mouse","categoria":"Peripherals","preco":89.90,"estoque":10,"ativo":true}'
 ```
 
 ## Postman Collection
 
-Importe `postman/produtos-api-collection.json` e configure:
-- `baseUrl`: URL da sua Function App
-- `functionKey`: chave obtida via `az functionapp keys list`
+Import `postman/produtos-api-collection.json` and configure:
+- `baseUrl`: your Function App URL
+- `functionKey`: key obtained via `az functionapp keys list`
 
-## Monitoramento
+## Monitoring
 
-- **Logs e execuções:** Application Insights → Logs (KQL) ou Performance
-- **Alertas configurados:**
-  - `alerta-api-produtos-falhas` — disparado quando há falhas nas requisições
-  - `alerta-api-produtos-latencia` — disparado quando a latência média excede 2 segundos
+- **Logs and executions:** Application Insights → Logs (KQL) or Performance
+- **Configured alerts:**
+  - `alerta-api-produtos-falhas` — triggers when request failures are detected
+  - `alerta-api-produtos-latencia` — triggers when average latency exceeds 2 seconds
 
-## Limpeza de recursos
+## Cleanup
 
 ```bash
 source infra/variaveis.sh
 az group delete --name "$RG" --yes --no-wait
 ```
 
-## Projeto acadêmico
+## Academic project
 
-Desenvolvido como Projeto 3 da disciplina de Computação em Nuvem, seguindo o Roteiro Detalhado fornecido em aula. Implementação completa na Azure, com CRUD funcional, segurança via Function Key, observabilidade via Application Insights e alertas configurados no Azure Monitor.
+Built as Project 3 for a Cloud Computing course, following the detailed lab guide provided in class. Full Azure implementation, with working CRUD, Function Key-based security, observability via Application Insights, and alerts configured in Azure Monitor.
