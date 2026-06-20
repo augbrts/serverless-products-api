@@ -167,6 +167,43 @@ source infra/variaveis.sh
 az group delete --name "$RG" --yes --no-wait
 ```
 
+## Evidence
+
+### API Tests
+
+**Create product (POST):**
+![POST create product](evidencias/testes/01-post-criar-produto.png)
+
+**List and get by ID (GET):**
+![GET list and by ID](evidencias/testes/02-get-lista-e-por-id.png)
+
+**Full and partial update (PUT / PATCH):**
+![PUT PATCH update](evidencias/testes/03-put-patch.png)
+
+**Delete and 404 validation (DELETE):**
+![DELETE and 404](evidencias/testes/04-delete-e-404.png)
+
+**Function deployment log:**
+![Deployment log](evidencias/testes/05-deploy-functions-list.png)
+
+### Database
+
+**Cosmos DB Data Explorer with records:**
+![Cosmos DB Data Explorer](evidencias/banco/01-cosmosdb-data-explorer.png)
+
+### Monitoring
+
+**Application Insights — Logs (KQL):**
+![Application Insights Logs](evidencias/logs/01-application-insights-logs.png)
+
+**Application Insights — Performance metrics:**
+![Performance metrics](evidencias/dashboard/01-performance-metricas.png)
+
+### Alerts
+
+**Configured alert rules:**
+![Alert rules](evidencias/alertas/01-alertas-configurados.png)
+
 ## Academic project
 
 Built as Project 3 for a Cloud Computing course, following the detailed lab guide provided in class. Full Azure implementation, with working CRUD, Function Key-based security, observability via Application Insights, and alerts configured in Azure Monitor.
