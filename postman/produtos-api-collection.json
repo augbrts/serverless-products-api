@@ -1,0 +1,121 @@
+{
+  "info": {
+    "name": "Projeto 3 — Serverless Products API (Azure)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl",     "value": "https://func-p3-produtos-v2-d45082.azurewebsites.net/api" },
+    { "key": "functionKey", "value": "SUA_FUNCTION_KEY_AQUI" },
+    { "key": "produtoId",   "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Criar produto",
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('Produto criado', function () {",
+        "  pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+        "});",
+        "pm.test('Salvar ID do produto', function () {",
+        "  const json = pm.response.json();",
+        "  pm.expect(json.produto.id).to.exist;",
+        "  pm.collectionVariables.set('produtoId', json.produto.id);",
+        "});"
+      ]}}],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "x-functions-key", "value": "{{functionKey}}" }
+        ],
+        "url": "{{baseUrl}}/produtos",
+        "body": { "mode": "raw", "raw": "{\n  \"nome\": \"Mouse sem fio\",\n  \"descricao\": \"Mouse optico USB sem fio\",\n  \"categoria\": \"Perifericos\",\n  \"preco\": 89.90,\n  \"estoque\": 30,\n  \"ativo\": true\n}" }
+      }
+    },
+    {
+      "name": "Listar produtos",
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('Resposta bem-sucedida', function () {",
+        "  pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+        "});"
+      ]}}],
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "x-functions-key", "value": "{{functionKey}}" }],
+        "url": "{{baseUrl}}/produtos"
+      }
+    },
+    {
+      "name": "Buscar produto",
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('Resposta bem-sucedida', function () {",
+        "  pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+        "});"
+      ]}}],
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "x-functions-key", "value": "{{functionKey}}" }],
+        "url": "{{baseUrl}}/produtos/{{produtoId}}"
+      }
+    },
+    {
+      "name": "Atualizar produto (PUT)",
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('Resposta bem-sucedida', function () {",
+        "  pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+        "});"
+      ]}}],
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "x-functions-key", "value": "{{functionKey}}" }
+        ],
+        "url": "{{baseUrl}}/produtos/{{produtoId}}",
+        "body": { "mode": "raw", "raw": "{\n  \"nome\": \"Teclado mecanico RGB\",\n  \"descricao\": \"Teclado ABNT2 com iluminacao RGB\",\n  \"categoria\": \"Perifericos\",\n  \"preco\": 299.90,\n  \"estoque\": 10,\n  \"ativo\": true\n}" }
+      }
+    },
+    {
+      "name": "Atualizar parcialmente (PATCH)",
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('Resposta bem-sucedida', function () {",
+        "  pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+        "});"
+      ]}}],
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "x-functions-key", "value": "{{functionKey}}" }
+        ],
+        "url": "{{baseUrl}}/produtos/{{produtoId}}",
+        "body": { "mode": "raw", "raw": "{\n  \"estoque\": 8,\n  \"preco\": 279.90\n}" }
+      }
+    },
+    {
+      "name": "Excluir produto",
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('Resposta bem-sucedida', function () {",
+        "  pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+        "});"
+      ]}}],
+      "request": {
+        "method": "DELETE",
+        "header": [{ "key": "x-functions-key", "value": "{{functionKey}}" }],
+        "url": "{{baseUrl}}/produtos/{{produtoId}}"
+      }
+    },
+    {
+      "name": "Validar 404 após exclusão",
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('Status 404', function () {",
+        "  pm.expect(pm.response.code).to.eql(404);",
+        "});"
+      ]}}],
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "x-functions-key", "value": "{{functionKey}}" }],
+        "url": "{{baseUrl}}/produtos/{{produtoId}}"
+      }
+    }
+  ]
+}
