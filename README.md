@@ -207,4 +207,4 @@ az group delete --name "$RG" --yes --no-wait
 
 ## Academic project
 
-Built as a project for a Cloud Computing course, following the detailed lab guide provided in class. Full Azure implementation, with working CRUD, Function Key-based security, observability via Application Insights, and alerts configured in Azure Monitor.
+Built as a project for SoulCode DevOps Bootcamp, following the detailed lab guide provided in class. Full Azure implementation, with working CRUD, Function Key-based security, observability via Application Insights, and alerts configured in Azure Monitor.
