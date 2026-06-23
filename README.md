@@ -46,45 +46,12 @@ Azure Cosmos DB (NoSQL)
 | PATCH | /produtos/{id} | Partial update | 200 / 404 |
 | DELETE | /produtos/{id} | Delete product | 200 / 404 |
 
-## Project structure
-serverless-products-api/
-
-├── projeto3-azure/
-
-│   ├── ProdutoRoot/        # GET, POST /produtos
-
-│   ├── ProdutoItem/        # GET, PUT, PATCH, DELETE /produtos/{id}
-
-│   ├── shared_code/        # Cosmos DB client and helpers
-
-│   ├── host.json
-
-│   └── requirements.txt
-
-├── infra/
-
-│   └── variaveis.sh        # Resource names (no secrets)
-
-├── postman/
-
-│   └── produtos-api-collection.json
-
-├── evidencias/             # Test, database, logs, dashboard and alert screenshots
-
-└── README.md
-
-## Prerequisites
-
-- Azure CLI (`az version`)
-- Azure Functions Core Tools v4 (`func --version`)
-- Python 3.11
-
 ## How to reproduce
 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/SEU_USUARIO/serverless-products-api.git
+git clone https://github.com/YOUR_USER/serverless-products-api.git
 cd serverless-products-api
 ```
 
