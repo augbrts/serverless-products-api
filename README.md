@@ -157,8 +157,8 @@ Import `postman/produtos-api-collection.json` and configure:
 
 - **Logs and executions:** Application Insights → Logs (KQL) or Performance
 - **Configured alerts:**
-  - `alerta-api-produtos-falhas` — triggers when request failures are detected
-  - `alerta-api-produtos-latencia` — triggers when average latency exceeds 2 seconds
+  - `alerta-api-produtos-falhas` - triggers when request failures are detected
+  - `alerta-api-produtos-latencia` - triggers when average latency exceeds 2 seconds
 
 ## Cleanup
 
@@ -171,7 +171,7 @@ az group delete --name "$RG" --yes --no-wait
 
 ### API Tests
 
-**Create product (POST) — returns 201 with generated ID:**
+**Create product (POST) - returns 201 with generated ID:**
 ![POST create product](evidencias/testes/01-post-criar-produto.png)
 
 **List all and get by ID (GET):**
@@ -193,10 +193,10 @@ az group delete --name "$RG" --yes --no-wait
 
 ### Monitoring
 
-**Application Insights — request logs (KQL query results):**
+**Application Insights - request logs (KQL query results):**
 ![Application Insights Logs](evidencias/logs/02-application-insights-logs-results.png)
 
-**Application Insights — performance metrics (duration, request count):**
+**Application Insights - performance metrics (duration, request count):**
 ![Performance metrics](evidencias/dashboard/01-performance-metricas.png)
 
 ### Alerts
